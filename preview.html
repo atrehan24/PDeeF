@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Pages</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+            padding: 30px;
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .page img {
+            width: 150px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .page img:hover {
+            transform: scale(1.05);
+        }
+
+        /* ---------- MODAL ---------- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 32px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Select Pages to Extract</h2>
+
+<form method="post" action="/split-final">
+    <input type="hidden" name="pdf_name" value="{{ pdf_name }}">
+
+    <div class="grid">
+        {% for img in images %}
+        <div class="page">
+            <input type="checkbox" name="pages" value="{{ loop.index0 }}" checked>
+            <img
+                src="/uploads/preview/{{ img }}"
+                onclick="openPreview('/uploads/preview/{{ img }}')"
+            >
+            <p>Page {{ loop.index }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <button type="submit">Extract Selected Pages</button>
+</form>
+
+<!-- ---------- MODAL ---------- -->
+<div class="modal" id="previewModal" onclick="closePreview()">
+    <span class="close">&times;</span>
+    <img id="modalImage">
+</div>
+
+<script>
+function openPreview(src) {
+    event.stopPropagation();
+    const modal = document.getElementById("previewModal");
+    const img = document.getElementById("modalImage");
+    img.src = src;
+    modal.style.display = "flex";
+}
+
+function closePreview() {
+    document.getElementById("previewModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>PDF Tool</h2>
+
+    <!-- NORMAL FORM SUBMIT -->
+    <form action="/process" method="post" enctype="multipart/form-data">
+
+        <input type="file" name="file" accept="application/pdf" required>
+        <br><br>
+
+        <select name="operation" required>
+            <option value="convert">PDF → Word</option>
+            <option value="split">Extract Pages(Split) </option>
+            <option value="compress">Compress PDF</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Run Operation</button>
+    </form>
+</div>
+
+</body>
+</html>
